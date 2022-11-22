@@ -39,7 +39,7 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 
 	for (auto& file_path : file_contents) {
 		auto file_name = d2h::clean_file_name(file_path);
-		gen_head << fmt::format("#include \"./headers/{}.hpp", file_name) << std::endl;
+		gen_head << fmt::format("#include \"./headers/{}.hpp\"", file_name) << std::endl;
 
 		std::cout << fmt::format("generating {}.hpp", file_name);
 
