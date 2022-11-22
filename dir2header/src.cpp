@@ -8,7 +8,7 @@
 
 auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 
-	if (count < 1) {
+	if (count <= 1) {
 		std::cout << "[!] invalid usage... > dir2header.exe target_dir" << std::endl;
 		return -1;
 	}
@@ -27,8 +27,12 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 		file_contents.push_back(file_path);
 	}
 
+	std::cout << fmt::format("generating {} headers", file_contents.size()) << std::endl;
+
 	std::filesystem::create_directory(std::filesystem::path{ ".\\d2h_gen" });
 	std::filesystem::create_directory(std::filesystem::path{ ".\\d2h_gen\\headers" });
+
+	std::cout << "generating d2h_gen.hpp" << std::endl;
 
 	std::ofstream gen_head(".\\d2h_gen\\d2h_gen.hpp");
 	gen_head << "#pragma once\n" << std::endl;
@@ -36,6 +40,8 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 	for (auto& file_path : file_contents) {
 		auto file_name = d2h::clean_file_name(file_path);
 		gen_head << fmt::format("#include \"./headers/{}.hpp", file_name) << std::endl;
+
+		std::cout << fmt::format("generating {}.hpp", file_name);
 
 		std::ofstream out_file(fmt::format(".\\d2h_gen\\headers\\{}.hpp", file_name));
 
@@ -57,9 +63,13 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 		out_file << "\n};\n\n" << std::endl;
 
 		out_file.close();
+
+		std::cout << fmt::format(" size: {:x}", file_buffer.size()) << std::endl;;
 	}
 
+	std::cout << "cleaning up" << std::endl;
 	gen_head.close();
 
+	std::cout << "done." << std::endl;
 	return 0;
 }
