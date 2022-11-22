@@ -49,7 +49,7 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 		out_file << "#pragma once" << std::endl;
 
 		out_file << "#include <vector>\n" << std::endl;
-		out_file << fmt::format("std::vector<__int8> {}_data = ", file_name).c_str() << "{";
+		out_file << fmt::format("std::vector<unsigned __int8> {}_data = ", file_name).c_str() << "{";
 
 		auto file_buffer = util::get_file_buffer(file_path);
 		for (std::int32_t idx = 0; idx < file_buffer.size(); idx++) {
