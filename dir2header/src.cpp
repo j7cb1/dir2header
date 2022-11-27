@@ -51,6 +51,7 @@ auto main(std::int32_t count, char* variables[]) -> std::int32_t {
 		out_file << "#include <vector>\n" << std::endl;
 		out_file << fmt::format("std::vector<unsigned __int8> {}_data = ", file_name).c_str() << "{";
 
+		std::replace(file_path.begin(), file_path.end(), '/', '\\');
 		auto file_buffer = util::get_file_buffer(file_path);
 		for (std::int32_t idx = 0; idx < file_buffer.size(); idx++) {
 

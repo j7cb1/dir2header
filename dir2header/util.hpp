@@ -11,21 +11,12 @@ namespace util
 {
 	auto get_file_buffer(std::string file_name) -> std::vector<std::uint8_t> {
 		
-		auto input_file = std::ifstream(file_name);		
-		input_file.seekg(0, input_file.end);
+		// open the file:
+		std::ifstream file(file_name, std::ios::binary);
 
-		size_t size = input_file.tellg();
-		
-		std::vector<char> buffer;
-		if (size > 0) {
-
-			input_file.seekg(0, input_file.beg);
-			buffer.resize(size);
-
-			input_file.read(&buffer[0], size);
-		}
-
-		return std::vector<std::uint8_t>(buffer.begin(), buffer.end());
+		// read the data:
+		return std::vector<std::uint8_t>((std::istreambuf_iterator<char>(file)),
+			std::istreambuf_iterator<char>());
 	}
 
 	auto split_str(std::string str, std::string delimiter) -> std::vector<std::string> {
